@@ -1,0 +1,129 @@
+#!/bin/bash
+
+function send_log(){
+CHATID=$(grep -E "^#bot# " "/etc/bot/.bot.db" | cut -d ' ' -f 3)
+KEY=$(grep -E "^#bot# " "/etc/bot/.bot.db" | cut -d ' ' -f 2)
+TIME="10"
+URL="https://api.telegram.org/bot$KEY/sendMessage"
+TEXT="
+<code>────────────────────</code>
+<b>⚠️ NOTIFICATIONS MULTI LOGIN Xray ⚠️</b>
+<code>────────────────────</code>
+<code>Username  : </code><code>$user</code>
+<code>Limit Ip    : </code><code>$iplimit</code>
+<code>────────────────────</code>
+"
+curl -s --max-time $TIME -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT&parse_mode=html" $URL >/dev/null
+}
+function vmip(){
+#LIMITVMESSIP
+echo -n > /var/log/xray/access.log
+sleep 600
+data=( `ls /etc/vmess/ip`);
+#Decrypted By YADDY D PHREAKER
+    for user in "${data[@]}"
+    do
+        iplimit=$(cat /etc/vmess/${user}ip/)
+        ehh=$(cat /var/log/xray/access.log | grep "$user" | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | sort | uniq);
+        cekcek=$(echo -e "$ehh" | wc -l);
+        if [[ $cekcek -gt $iplimit ]]; then
+            exp=$(grep -w "^### $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
+                  sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
+                  sed -i "/^### $user $exp/d" /etc/vmess/.vmess.db
+                  systemctl restart xray >> /dev/null 2>&1
+                  jum2=$(cat /tmp/ipvmess.txt | wc -l)
+                  rm -rf /etc/funny/limit/vmess/ip/$user
+                  rm -f /etc/limit/vmess/$user
+                  rm -f /var/www/html/vmess-$user.txt
+                  send_log
+                else
+            echo ""
+        fi
+        sleep 0.1
+    done
+}
+vmip
+function vlip(){
+#LIMITVLESSIP
+echo -n > /var/log/xray/access.log
+sleep 600
+data=( `ls /etc/vless/ip`);
+#Decrypted By YADDY D PHREAKER
+    for user in "${data[@]}"
+    do
+        iplimit=$(cat /etc/vless/${user}ip/)
+        ehh=$(cat /var/log/xray/access.log | grep "$user" | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | sort | uniq);
+        cekcek=$(echo -e "$ehh" | wc -l);
+        if [[ $cekcek -gt $iplimit ]]; then
+            exp=$(grep -w "^#& $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
+                  sed -i "/^#& $user $exp/,/^},{/d" /etc/xray/config.json
+                  sed -i "/^#& $user $exp/d" /etc/vless/.vless.db
+                  systemctl restart xray >> /dev/null 2>&1
+                  jum2=$(cat /tmp/ipvless.txt | wc -l)
+                  rm -rf /etc/funny/limit/vless/ip/$user
+                  rm -f /etc/limit/vless/$user
+                  rm -f /var/www/html/vless-$user.txt
+                  send_log
+                else
+            echo ""
+        fi
+        sleep 0.1
+    done
+}
+vlip
+function trip(){
+#LIMITIPTROJAN
+echo -n > /var/log/xray/access.log
+sleep 600
+data=( `ls /etc/trojan/ip`);
+#Decrypted By YADDY D PHREAKER
+    for user in "${data[@]}"
+    do
+        iplimit=$(cat /etc/trojan/${user}ip/)
+        ehh=$(cat /var/log/xray/access.log | grep "$user" | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | sort | uniq);
+        cekcek=$(echo -e "$ehh" | wc -l);
+        if [[ $cekcek -gt $iplimit ]]; then
+            exp=$(grep -w "^#! $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
+                  sed -i "/^#! $user $exp/,/^},{/d" /etc/xray/config.json
+                  sed -i "/^#! $user $exp/d" /etc/trojan/.trojan.db
+                  systemctl restart xray >> /dev/null 2>&1
+                  jum2=$(cat /tmp/iptrojan.txt | wc -l)
+                  rm -rf /etc/funny/limit/trojan/ip/$user
+                  rm -f /etc/limit/trojan/$user
+                  rm -f /var/www/html/trojan-$user.txt
+                  send_log
+                else
+            echo ""
+        fi
+        sleep 0.1
+    done
+}
+vlip
+function ssip(){
+#LIMITIPTROJAN
+echo -n > /var/log/xray/access.log
+sleep 600
+data=( `ls /etc/funny/limit/shadowsocks/ip`);
+#Decrypted By YADDY D PHREAKER
+    for user in "${data[@]}"
+    do
+        iplimit=$(cat /etc/funny/limit/shadowsocks/ip/$user)
+        ehh=$(cat /var/log/xray/access.log | grep "$user" | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | sort | uniq);
+        cekcek=$(echo -e "$ehh" | wc -l);
+        if [[ $cekcek -gt $iplimit ]]; then
+            exp=$(grep -w "^#!# $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
+                  sed -i "/^#!# $user $exp/,/^},{/d" /etc/xray/config.json
+                  sed -i "/^#!# $user $exp/d" /etc/shadowsocks/.shadowsocks.db
+                  systemctl restart xray >> /dev/null 2>&1
+                  jum2=$(cat /tmp/iptrojan.txt | wc -l)
+                  rm -rf /etc/funny/limit/shadowsocks/ip/$user
+                  rm -f /etc/limit/shadowsocks/$user
+                  rm -f /var/www/html/sodosokws-$user.txt
+                  send_log
+                else
+            echo ""
+        fi
+        sleep 0.1
+    done
+}
+ssip
